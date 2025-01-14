@@ -25,7 +25,6 @@ System_Boundary(c1, "Knight Frank") {
             AzureFunction(aFunc, "Function - Filter Service", "Http/Sbus Trigger")
             Component(compDom, "Domain Logic Component", "Process, Rules and validation")
             Component(compSec, "Security Component", "Provides functionality to validate callers and grant access to the service ")
-            Component(compAudit, "Audit Component", "Provides functionality that is useful for administration")
         }
 
         SystemDb(hubDb, "Hub DB", "Transaction Managemnt Storage", $tags = "storage")
@@ -37,7 +36,6 @@ System_Boundary(c1, "Knight Frank") {
 'Rel(apim, aFunc, "")
 Rel(aFunc, compDom, "")
 Rel(aFunc, compSec, "")
-Rel(compDom, compAudit, "")
 
 Rel(hub, hubDb, "Update Contact")
 Rel(hub, toNS, "Hub Publish")
