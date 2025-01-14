@@ -8,7 +8,8 @@ LAYOUT_LEFT_RIGHT()
 AddElementTag("microService", $shape=EightSidedShape(), $fontColor="white", $legendText="micro service\neight sided")
 AddElementTag("storage", $shape=RoundedBoxShape(), $fontColor="white")
 
-
+SHOW_PERSON_OUTLINE()
+Person( user, User, "A User")
 System_Boundary(c1, "Knight Frank") {
     System(hub, "Hub, Property Transaction System") 
 
@@ -22,9 +23,6 @@ System_Boundary(c1, "Knight Frank") {
     SystemDb(hubDb, "Hub DB", "Transaction Managemnt Storage", $tags = "storage")
     System_Ext(ns, "NorthStar", "NorthStar CRM")
 }
-
-
-Person( user, User, "A User")
 
 
 Rel(user, hub, "Interact with Contact", "Https")
