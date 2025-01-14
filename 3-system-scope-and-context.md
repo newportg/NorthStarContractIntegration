@@ -11,15 +11,9 @@ An internal user will not notice any change to the use or performance of the hub
 ![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/NorthStarContractIntegration/master/plantuml/TechnicalContext.puml)
 
 
-* The API runs as a microservice on our cloud platform, and will be accessible via a API Management interface.
+* The Filter Service runs as a microservice on our cloud platform, and will be accessible via a API Management interface.
 * The connection to the external Address provider is over HTTPS, secured by OAuth2.
-* The data passed in this application is not sensitive and doesn't need any encryption protocols.
-* Any data retuned by the external provider will be stored, by our document management and scanned for viruses.
-* A service bus interface will be available, for asynchronous queueing of jobs.
-* A http interface will be available, for ad-hoc querying of information.
+* The data passed in this application is sensitive and should not pass outside of our network.
+* Passing data between resources will follow our security and encryption guidelines.
+* A service bus interface will be used to guarantee delivery of data.
 
-| Business Interface         | Channel          |
-| -------------------------- | ---------------- |
-| API for business functions | internet (https) |
-| API for admin / audit      | internet (https) |
-| Bulk Updates               | Service Bus      |
