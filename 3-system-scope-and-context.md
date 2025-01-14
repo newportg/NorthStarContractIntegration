@@ -12,7 +12,6 @@ An internal user will not notice any change to the use or performance of the hub
 
 
 * The Filter Service runs as a microservice on our cloud platform, and will be accessible via a API Management interface.
-* The connection to the external Address provider is over HTTPS, secured by OAuth2.
 * The data passed in this application is sensitive and should not pass outside of our network.
 * Passing data between resources will follow our security and encryption guidelines.
 * A service bus interface will be used to guarantee delivery of data.
