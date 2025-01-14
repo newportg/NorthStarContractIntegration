@@ -1,0 +1,52 @@
+@startuml System
+!include <C4/C4_Component>
+!include <azure/AzureCommon>
+!include <azure/Compute/AzureFunction>
+!include <azure/Web/AzureAPIManagement>
+!include <azure/Integration/AzureServiceBusTopic>
+!include <azure/Web/AzureSearch>
+
+LAYOUT_WITH_LEGEND()
+LAYOUT_LEFT_RIGHT()
+
+AddElementTag("microService", $shape=EightSidedShape(), $fontColor="white", $legendText="micro service\neight sided")
+AddElementTag("storage", $shape=RoundedBoxShape(), $fontColor="white")
+
+
+System_Boundary(c1, "Knight Frank") {
+    System_Boundary(auth, "Managed Identity") {
+        System(hub, "Hub, Property Transaction System") 
+
+'        AzureAPIManagement(apim, "APIM", "Management")
+
+        AzureServiceBusTopic(toNS, "New\Updated Contacts", "Integration")
+        AzureServiceBusTopic(fromNS, "Processed Contacts", "Integration")
+        Container_Boundary(app, "Filters Service", "Allows users to read address information", $tags = "microService") {
+            AzureFunction(aFunc, "Function - Filter Service", "Http/Sbus Trigger")
+            Component(compDom, "Domain Logic Component", "Process, Rules and validation")
+            Component(compSec, "Security Component", "Provides functionality to validate callers and grant access to the service ")
+            Component(compAudit, "Audit Component", "Provides functionality that is useful for administration")
+        }
+
+        SystemDb(hubDb, "Hub DB", "Transaction Managemnt Storage", $tags = "storage")
+    }
+    
+    System_Ext(ns, "NorthStar", "NorthStar CRM")    
+}
+
+'Rel(apim, aFunc, "")
+Rel(aFunc, compDom, "")
+Rel(aFunc, compSec, "")
+Rel(compDom, compAudit, "")
+
+Rel(hub, hubDb, "Update Contact")
+Rel(hub, toNS, "Hub Publish")
+Rel(hub, fromNS, "Hub Subscribe")
+Rel_U(aFunc, fromNS, "N* Publish Contact")
+Rel_U(aFunc, toNS, "N* Subscribe")
+
+Rel(compDom, ns, "Filtered Contact")
+Rel(ns, compDom, "CRM record Id")
+
+
+@enduml

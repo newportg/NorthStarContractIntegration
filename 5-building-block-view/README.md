@@ -1,6 +1,6 @@
 # 5, Building Block View
 
-![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/Frontify/master/plantuml/BuildingBlockView.puml)
+![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/NorthStarContractIntegration/master/plantuml/BuildingBlockView.puml)
 
 
 This service has been designed to handle the interaction with the Frontify brochure generation service. Based on the information supplied the service will determine whether to use the, more automated API service, or the more bespoke CSV file service, which requires a great deal of user interaction.
@@ -11,11 +11,9 @@ The service will provide auditing information, which will return information bas
 
 | **Name**                 | **Responsibility**                                                                       |
 | ------------------------ | ---------------------------------------------------------------------------------------- |
-| Azure Function           |  Is the interface to all systems. provides both Restful API and Service Bus Interfaces.  |
-| Security Component       |  Provides all Managed Identity and User Identity/Access controls                         |
+| Azure Function           | Is the interface to all systems. provides both Restful API and Service Bus Interfaces.   |
+| Security Component       | Provides all Managed Identity and User Identity/Access controls                          |
 | Audit Component          | Provides a standardised set of audit data retrieval methods, and SOC Alert rules         |
-| Cosmos Db Component      | Provides any abstractions or specialisations necessary to access Knight Franks Cosmos DB |
-| Frontify Service Handler | Is a specific interface for the Frontify Brochure Generation service.                    |
 | Domain Logic Component   | Provides rules and workflow to satisfy the requirements of this service                  |
 
 ### Azure Function
