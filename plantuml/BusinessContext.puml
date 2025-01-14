@@ -1,21 +1,32 @@
 @startuml
 !include <C4/C4_Container>
+!include <azure/AzureCommon>
+!include <azure/Integration/AzureServiceBusTopic>
 
-LAYOUT_WITH_LEGEND()
+'LAYOUT_WITH_LEGEND()
 LAYOUT_LEFT_RIGHT()
 AddElementTag("microService", $shape=EightSidedShape(), $fontColor="white", $legendText="micro service\neight sided")
 AddElementTag("storage", $shape=RoundedBoxShape(), $fontColor="white")
 
 SHOW_PERSON_OUTLINE()
 Person( user, User, "A User")
-System(ns, "Knight Frank System") 
-System(app, "Brochure Service", "Allows users to create brochures", $tags = "microService")  
-SystemDb(cosmos, "CosmosDB", "Content Managemnt Storage", $tags = "storage")
-System_Ext(frontify, "Frontify", "External Brochure generation service")
+System(hub, "Hub, Property Transaction System") 
+System(app, "Filter Service", "Filters Contacts ", $tags = "microService")  
+SystemDb(hubDb, "Hub DB", "Transaction Managemnt Storage", $tags = "storage")
+AzureServiceBusTopic(toNS, "New\Updated Contacts", "Integration")
+AzureServiceBusTopic(fromNS, "Processed Contacts", "Integration")
+System_Ext(ns, "NorthStar", "NorthStar CRM")
 
-Rel(user, ns, "Selects activity for brochure generation", "Https")
-Rel(ns, app, " Uses the brochure service", "Https")
-Rel(app, frontify, "Generate Brochure", "Https")
-Rel(app, cosmos, "Cache usage detail ")
+Rel(user, hub, "Interact with Contact", "Https")
+
+Rel(hub, hubDb, "Update Contact")
+Rel(hub, toNS, "Hub Publish")
+Rel(hub, fromNS, "Hub Subscribe")
+Rel_U(app, fromNS, "N* Publish Contact")
+Rel_U(app, toNS, "N* Subscribe")
+
+Rel(app, ns, "Filtered Contact")
+Rel(ns, app, "CRM record Id")
+
 
 @enduml
