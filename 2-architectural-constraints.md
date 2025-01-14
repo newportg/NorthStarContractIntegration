@@ -2,18 +2,13 @@
 
 ## Architectural Goals
 
-Integration Goals for Knight Frank’s Systems with Frontify Marketing material services:
+Integration Goals for Hub with NorthStar services:
 
-* Standardise Brochure Generation:
-  * Implement consistent methods for creating brochures.
 * Standardise Data Integration, Reporting, and Export:
   * Ensure uniform approaches for data handling and reporting.
 * Utilise Current Patterns for Gathering Usage Information:
   * Adopt existing methods to collect and analyze usage data.
-* Reduce Brochure Generation Time:
-  * Streamline processes to create brochures more quickly.
-* Control Brochure Look and Feel with Marketing Templates:
-  * Maintain a consistent design using marketing-approved templates.
+
 
 ## Architectural Principles
 
@@ -31,10 +26,6 @@ The proposed pattern architecture aligns to our current Group Technology Princip
 
 ## Architecture Constraints
 
-* External generation of marketing material should follow Knight Franks security and access rules concerning all clients, and especially clients with restricted access, such as high net worth and clients with NDA's
-* Marketing material should not persist on external sites longer than is necessary to complete the task.
-  * This is to avoid possible security leaks
-  * Minimise storage costs
 * Access to the service will follow current approved security and access rules.
   * Managed Identity to provide resource access.
   * User Identity optional, as calling systems will have already authenticated the user.
