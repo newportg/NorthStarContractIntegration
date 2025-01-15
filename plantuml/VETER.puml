@@ -4,45 +4,49 @@
 AddElementTag("storage", $shape=RoundedBoxShape(), $fontColor="white")
 LAYOUT_TOP_DOWN()
 
-MessageEndpoint( svc, "Service Request" )
-Message( req, "Request")
-Message( loq, "Frontify Request")
-MessageEndpoint(frontify, "Frontify Request" )
+MessageEndpoint( ep_client, "Client Request" )
+Message( cln_req, "Request")
+Message( svc_req, "Request")
+MessageEndpoint(ep_svc_req, "Service Request" )
 
 System_Boundary(c1, "Domain") {
     SelectiveConsumer(reqval, "Validation")
     MessageTranslator( req2con, "Request to Canonical")
-    MessageTranslator( con2loq, "Canonical to Frontify")
+    MessageTranslator( con2svc, "Canonical to Service")
     Message( con, "Canonical")
+
+    ProcessManager( proc, "Process")
+
     Message( conr, "Canonical")
-    MessageTranslator( loqr2conr, "Frontify Response to Canonical")
+    MessageTranslator( conr2svc, "Canonical to Response")
+    MessageTranslator( svc2conr, "Service Response to Canonical")
     SelectiveConsumer(resval, "Validation")
 
-    con -- conr
+    con -- proc
+    proc -- conr
 }
-SystemDb(cosmos, "CosmosDB", "Content Managemnt Storage", $tags = "storage")
-conr --> cosmos
 
-MessageEndpoint( svcr, "Service Response" )
-Message( res, "Response")
-Message( loqr, "Frontify Response")
-MessageEndpoint(frontifyr, "Frontify Response" )
+MessageEndpoint( ep_svc_res, "Service Response" )
+Message( cln_res, "Response")
+Message( svc_res, "Response")
+MessageEndpoint(ep_cln_res, "Client Response" )
 
-svc -> req
-req -> reqval
+ep_client -> cln_req
+cln_req -> reqval
 reqval -> req2con
 req2con -> con
-con -> con2loq
-con2loq -> loq
-loq -> frontify
+con -> con2svc
+con2svc -> svc_req
+svc_req -> ep_svc_req
 
-req -[hidden]-> res
+cln_req -[hidden]-> cln_res
 
-svcr <- res
-res <- conr
-conr <- loqr2conr
-loqr2conr <- resval
-resval <- loqr
-loqr <- frontifyr
+ep_cln_res <- cln_res
+cln_res <- conr2svc
+conr2svc <- conr
+conr <- svc2conr
+svc2conr <- resval
+resval <- svc_res
+svc_res <- ep_svc_res
 
 @enduml
