@@ -4,7 +4,7 @@ The domain logic will handle requests from both Service Bus and Ad-hoc via a RES
 
 ## Flowchart
 
-![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/Frontify/master/plantuml/ProcessFlow.puml)
+![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/NorthStarContractIntegration/master/plantuml/ProcessFlow.puml)
 
 ## Schemas and Maps
 
@@ -23,54 +23,13 @@ Objects received from interfaces should follow a standard VETER integration patt
 * Route
   * Directs the processed message to the appropriate destination based on certain criteria.
 
-![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/Frontify/master/plantuml/VETER.puml)
+![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/NorthStarContractIntegration/master/plantuml/VETER.puml)
 
-## Brochure Generation
 
 ### Request Schema
 
-![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/Frontify/master/plantuml/ServiceBusReq.puml)
+![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/NorthStarContractIntegration/master/plantuml/ServiceBusReq.puml)
 
-```plantuml
-@startjson
-{
-    "Id" : "string",
-    "Audit": {
-        "sourceApp": "string",
-        "user": {
-            "id" : "string<uuid>",
-            "login": "string",
-            "name": "string",
-            "email": "string"
-        },
-        "impersonating": {
-            "id" : "string<uuid>",
-            "login": "string",
-            "name": "string",
-            "email": "string"
-        },
-        "host":{
-            "ipAddress":"string<ipv4>",
-            "hostName":"string<hostname>"
-        },
-        "timestamp": "string<datetime>"
-    },
-    "Request" : {
-        "ExternalId": "string<guid>",
-        "Bespoke" : "string<boolean>",
-        "TemplateId": "string<FrontifyId>",
-        "Brochure": [
-            { 
-              "Key": "string",
-              "Type": "string",
-              "Value": "string"
-            }
-        ]
-    }
-}
-
-@endjson
-```
 
 ### Validation Rules
 
@@ -91,55 +50,6 @@ Objects received from interfaces should follow a standard VETER integration patt
 
 ### Response Schema
 
-![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/Frontify/master/plantuml/ServiceBusRes.puml)
+![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/NorthStarContractIntegration/master/plantuml/ServiceBusRes.puml)
 
-```plantuml
-@startjson
-{
-    "Id" : "string",
-    "Audit": {
-        "sourceApp": "string",
-        "user": {
-            "id" : "string<uuid>",
-            "login": "string",
-            "name": "string",
-            "email": "string"
-        },
-        "impersonating": {
-            "id" : "string<uuid>",
-            "login": "string",
-            "name": "string",
-            "email": "string"
-        },
-        "host":{
-            "ipAddress":"string<ipv4>",
-            "hostName":"string<hostname>"
-        },
-        "timestamp": "string<datetime>"
-    },
-    "Request" : {
-        "ExternalId": "string<guid>",
-        "Bespoke" : "string<boolean>",
-        "TemplateId": "string<FrontifyId>",
-        "Brochure": [
-            { 
-              "Key": "string",
-              "Type": "string",
-              "Value": "string"
-            }
-        ]
-    },
-    "Response": {
-      "Brochure" : {
-        "DocManagerId": "string<GUID>",
-        "URL": "string<URL>"
-      }
-    },
-    "Error" : [
-      {
-        "Desctiption" : "String"
-      }
-    ]    
-}
-@endjson
-```
+
