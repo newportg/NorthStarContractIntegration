@@ -1,0 +1,37 @@
+@startuml System
+!include <C4/C4_Component>
+!include <azure/AzureCommon>
+!include <azure/Compute/AzureFunction>
+!include <azure/Web/AzureAPIManagement>
+!include <azure/Integration/AzureServiceBusTopic>
+
+LAYOUT_LEFT_RIGHT()
+
+AddElementTag("microService", $shape=EightSidedShape(), $fontColor="white", $legendText="micro service\neight sided")
+AddElementTag("storage", $shape=RoundedBoxShape(), $fontColor="white")
+
+
+'AzureAPIManagement(apim, "APIM", "Management")
+AzureServiceBusTopic(toNS, "New\Updated Contacts", "Integration")
+AzureServiceBusTopic(fromNS, "Processed Contacts", "Integration")
+
+Container_Boundary(app, "Filter Service", "", $tags = "microService") {
+    AzureFunction(aFunc, "Filters Service", "Http/Sbus Trigger")
+    Component(compDom, "Domain Logic Component", "Process, Rules and validation")
+    Component(compSec, "Security Component", "Provides functionality to validate callers and grant access to the service ")
+
+}
+
+System_Ext(ns, "NorthStar", "NorthStar CRM")    
+
+'Rel(apim, aFunc, "HTTP Trigger") 
+Rel_U(aFunc, fromNS, "N* Publish Contact")
+Rel_U(aFunc, toNS, "N* Subscribe")
+
+Rel(aFunc, compDom, "")
+Rel(aFunc, compSec, "")
+
+Rel(compDom, ns, "Filtered Contact")
+Rel(ns, compDom, "CRM record Id")
+
+@enduml

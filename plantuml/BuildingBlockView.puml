@@ -21,7 +21,7 @@ System_Boundary(c1, "Knight Frank") {
 
         AzureServiceBusTopic(toNS, "New\Updated Contacts", "Integration")
         AzureServiceBusTopic(fromNS, "Processed Contacts", "Integration")
-        Container_Boundary(app, "Filters Service", "Allows users to read address information", $tags = "microService") {
+        Container_Boundary(app, "Filters Service", "", $tags = "microService") {
             AzureFunction(aFunc, "Function - Filter Service", "Http/Sbus Trigger")
             Component(compDom, "Domain Logic Component", "Process, Rules and validation")
             Component(compSec, "Security Component", "Provides functionality to validate callers and grant access to the service ")
