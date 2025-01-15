@@ -1,6 +1,6 @@
 # Security Component
 
-![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/Frontify/master/plantuml/SecurityComponent.puml)
+![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/NorthStarContractIntegration/master/plantuml/SecurityComponent.puml)
 
 ## Managed Identity
 
@@ -85,44 +85,4 @@ public static async Task<IActionResult> Run(HttpRequest req, ILogger log)
 }
 ```
 
-## User Authentication
 
-**N.B. If a User token is included in the header then check the user is authorised.**
-
-Use the Microsoft.Identity.Web library to handle authentication and authorization in your function.
-
-```c#
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using Microsoft.Identity.Web;
-using System.Threading.Tasks;
-
-public static class MyFunction
-{
-    [FunctionName("MyFunction")]
-    public static async Task<IActionResult> Run(
-        [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-        ILogger log)
-    {
-        var user = req.HttpContext.User;
-
-        if (!user.Identity.IsAuthenticated)
-        {
-            return new UnauthorizedResult();
-        }
-
-        // Check for specific roles or claims
-        if (!user.IsInRole("YourRequiredRole"))
-        {
-            return new ForbidResult();
-        }
-
-        // Proceed with your function logic
-        return new OkObjectResult("User is authorized");
-    }
-}
-
-```
