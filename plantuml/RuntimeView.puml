@@ -1,0 +1,25 @@
+@startuml Runtime View
+
+actor "Hub User" as user
+participant Hub as hub
+database HUbDb as hubdb
+queue "Service Bus" as bus
+participant "Filter Service" as svc
+participant "NorthStar CRM" as ns
+
+
+user -> hub ++ #gold : New/Update Contact
+  hub -> hubdb : Save Contact
+hub --> user  
+  hub -> bus ++ #gold: Publish Contact
+  bus -> svc ++ #gold: Subscribe Contact
+  Group #pink NorthStar Contact
+    svc -> ns ++ #gold:
+    ns -> svc --: ID
+  end
+  
+  svc -> bus --: Publish Contact
+  bus -> hub --
+  hub -> hubdb : Update Contact
+
+@enduml
