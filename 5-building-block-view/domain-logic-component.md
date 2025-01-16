@@ -52,4 +52,7 @@ Objects received from interfaces should follow a standard VETER integration patt
 
 ![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/NorthStarContractIntegration/master/plantuml/ServiceBusRes.puml)
 
+### Hub Contact Record
+![image](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/newportg/NorthStarContractIntegration/master/plantuml/HubContact.puml)
+
 

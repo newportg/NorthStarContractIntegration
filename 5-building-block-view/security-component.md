@@ -85,4 +85,5 @@ public static async Task<IActionResult> Run(HttpRequest req, ILogger log)
 }
 ```
 
-
+## Service Bus Queues
+Due to the nature of the information we are dealing with, messages on the service bus should be encrypted with AES 256.
